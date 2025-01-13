@@ -16,7 +16,8 @@
     "dotenv": "^16.4.7",
     "mysql2": "^3.12.0",
     "sequelize": "^6.37.5",
-    "source-map-support": "^0.5.21"
+    "source-map-support": "^0.5.21",
+    "tedious": "^18.6.1"
   },
   "devDependencies": {
     "@types/source-map-support": "^0.5.10",
