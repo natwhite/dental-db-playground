@@ -4,10 +4,22 @@ CREATE DATABASE IF NOT EXISTS dental_db;
 -- Switch to the newly created database
 USE dental_db;
 
+
+-- Drop tables in the opposite order from how they were created to avoid fk dependency constraints
+DROP TABLE IF EXISTS payments;
+DROP TABLE IF EXISTS invoices;
+DROP TABLE IF EXISTS procedures;
+DROP TABLE IF EXISTS appointments;
+DROP TABLE IF EXISTS patient_insurance;
+DROP TABLE IF EXISTS insurance_plans;
+DROP TABLE IF EXISTS insurance_companies;
+DROP TABLE IF EXISTS patients;
+DROP TABLE IF EXISTS guardians;
+DROP TABLE IF EXISTS dentists;
+DROP TABLE IF EXISTS offices;
+
 -- 2. Offices
 -- A table to store information about different dental offices within Kids Dental Brands.
-
-DROP TABLE IF EXISTS offices;
 CREATE TABLE offices
 (
     office_id      INT AUTO_INCREMENT PRIMARY KEY,
@@ -26,7 +38,7 @@ CREATE TABLE offices
 -- 3. Dentists
 -- A table to store the dental professionals. Each dentist is assigned to a specific office.
 
-DROP TABLE IF EXISTS dentists;
+
 CREATE TABLE dentists
 (
     dentist_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -51,7 +63,7 @@ CREATE TABLE dentists
 -- 4. Guardians
 -- A table to store the information of patients’ guardians (parents or legal representatives).
 
-DROP TABLE IF EXISTS guardians;
+
 CREATE TABLE guardians
 (
     guardian_id     INT AUTO_INCREMENT PRIMARY KEY,
@@ -73,7 +85,7 @@ CREATE TABLE guardians
 -- 5. Patients
 -- A table to store child (or youth) patient information, referencing their primary guardian.
 
-DROP TABLE IF EXISTS patients;
+
 CREATE TABLE patients
 (
     patient_id    INT AUTO_INCREMENT PRIMARY KEY,
@@ -98,7 +110,7 @@ CREATE TABLE patients
 -- Two tables to store insurance company information and their plans. Often, patients have insurance coverage from different companies/plans.
 
 -- 6.1. Insurance Companies
-DROP TABLE IF EXISTS insurance_companies;
+
 CREATE TABLE insurance_companies
 (
     insurance_id   INT AUTO_INCREMENT PRIMARY KEY,
@@ -114,7 +126,7 @@ CREATE TABLE insurance_companies
 ) ENGINE = InnoDB;
 
 -- 6.2. Insurance Plans
-DROP TABLE IF EXISTS insurance_plans;
+
 CREATE TABLE insurance_plans
 (
     plan_id       INT AUTO_INCREMENT PRIMARY KEY,
@@ -134,7 +146,7 @@ CREATE TABLE insurance_plans
 
 -- 7. Patient Insurance (Link Table)
 -- A patient may have more than one insurance plan. This junction table ties patients to their insurance plans.
-DROP TABLE IF EXISTS patient_insurance;
+
 CREATE TABLE patient_insurance
 (
     patient_id          INT        NOT NULL,
@@ -162,7 +174,7 @@ CREATE TABLE patient_insurance
 -- 8. Appointments
 -- This table captures appointment details linking patients to dentists.
 
-DROP TABLE IF EXISTS appointments;
+
 CREATE TABLE appointments
 (
     appointment_id       INT AUTO_INCREMENT PRIMARY KEY,
@@ -191,7 +203,7 @@ CREATE TABLE appointments
 -- 9. Procedures
 -- A table for procedures performed during an appointment. An appointment can have multiple procedures.
 
-DROP TABLE IF EXISTS procedures;
+
 CREATE TABLE procedures
 (
     procedure_id   INT AUTO_INCREMENT PRIMARY KEY,
@@ -214,7 +226,7 @@ CREATE TABLE procedures
 -- A table to capture billing information for a given appointment.
 -- Each appointment typically leads to a single invoice, but it’s possible that an appointment might have multiple invoices or partial invoices.
 
-DROP TABLE IF EXISTS invoices;
+
 CREATE TABLE invoices
 (
     invoice_id      INT AUTO_INCREMENT PRIMARY KEY,
@@ -240,7 +252,7 @@ CREATE TABLE invoices
 -- This table records each payment made against a particular invoice.
 -- An invoice can have multiple payments if the patient (or insurance) pays in installments.
 
-DROP TABLE IF EXISTS payments;
+
 CREATE TABLE payments
 (
     payment_id     INT AUTO_INCREMENT PRIMARY KEY,
