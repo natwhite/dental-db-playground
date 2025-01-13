@@ -9,6 +9,13 @@ const {
     DB_DIALECT
 } = process.env;
 
+if (!DB_USER) throw new Error('Missing DB_USER');
+if (!DB_HOST) throw new Error('Missing DB_HOST');
+if (!DB_DATABASE) throw new Error('Missing DB_DATABASE');
+if (!DB_DIALECT) throw new Error('Missing DB_DIALECT');
+if (!DB_PASSWORD) throw new Error('Missing DB_PASSWORD');
+if (!DB_PORT) throw new Error('Missing DB_PORT');
+
 export const sequelize = new Sequelize(
     DB_DATABASE || 'testing_db', // database name
     DB_USER || 'root',                   // username
