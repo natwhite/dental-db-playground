@@ -59,28 +59,28 @@ InsurancePlan.belongsTo(InsuranceCompany, { foreignKey: 'insurance_id' });
 // ----- PATIENT <-> INSURANCE PLAN (via PATIENT_INSURANCE) -----
 // A Patient can be covered by many InsurancePlans, and an InsurancePlan can cover many Patients
 Patient.belongsToMany(InsurancePlan, {
-    through: PatientInsurance,
-    foreignKey: 'patient_id',
-    otherKey: 'plan_id'
+	through: PatientInsurance,
+	foreignKey: 'patient_id',
+	otherKey: 'plan_id'
 });
 InsurancePlan.belongsToMany(Patient, {
-    through: PatientInsurance,
-    foreignKey: 'plan_id',
-    otherKey: 'patient_id'
+	through: PatientInsurance,
+	foreignKey: 'plan_id',
+	otherKey: 'patient_id'
 });
 
 // Export the sequelize instance and all models, if desired:
 export {
-    sequelize,
-    Office,
-    Dentist,
-    Guardian,
-    Patient,
-    InsuranceCompany,
-    InsurancePlan,
-    PatientInsurance,
-    Appointment,
-    Procedure,
-    Invoice,
-    Payment
+	sequelize,
+	Office,
+	Dentist,
+	Guardian,
+	Patient,
+	InsuranceCompany,
+	InsurancePlan,
+	PatientInsurance,
+	Appointment,
+	Procedure,
+	Invoice,
+	Payment
 };
