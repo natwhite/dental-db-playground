@@ -2,7 +2,6 @@
 
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../db.js';
-import { faker } from '@faker-js/faker';
 
 
 /**
@@ -36,20 +35,6 @@ export class PatientInsurance
 	declare public coverage_start_date: Date;
 	declare public coverage_end_date?: Date | null;
 	declare public created_at: Date;
-
-	public static async createRandom(
-		patient_id: number,
-		plan_id: number,
-		is_primary: boolean
-	): Promise<PatientInsuranceAttributes> {
-		return await PatientInsurance.create({
-			patient_id: patient_id,
-			plan_id: plan_id,
-			is_primary: is_primary,
-			coverage_start_date: faker.date.past({ years: 2 }),
-			coverage_end_date: faker.helpers.maybe(() => faker.date.future({ years: 1 }), { probability: 0.2 })
-		});
-	}
 }
 
 /**

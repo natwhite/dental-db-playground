@@ -2,7 +2,6 @@
 
 import { DataTypes, Model, Optional } from 'sequelize';
 import { sequelize } from '../db.js';
-import { faker } from '@faker-js/faker';
 
 
 /**
@@ -38,31 +37,6 @@ export class Payment
 	declare public payment_method: string;
 	declare public created_at: Date;
 	declare public updated_at: Date;
-
-	public static async createRandom(
-		invoice_id: number,
-		total_amount: number,
-		discount_amount: number,
-		invoice_date: Date
-	): Promise<Payment> {
-		return await Payment.create({
-			invoice_id: invoice_id,
-			amount: Number(faker.finance.amount({
-				// min: 10,
-				max: Number(total_amount) - Number(discount_amount),
-				dec: 2
-			})),
-			payment_date: faker.date.between({
-				from: invoice_date,
-				to: new Date()
-			}),
-			payment_method: faker.helpers.arrayElement([
-				'CREDIT_CARD',
-				'CHECK',
-				'CASH'
-			])
-		});
-	}
 }
 
 /**

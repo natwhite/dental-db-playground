@@ -2,7 +2,6 @@
 
 import { DataTypes, Model, Optional } from 'sequelize';
 import { sequelize } from '../db.js';
-import { faker } from '@faker-js/faker';
 
 
 /**
@@ -45,32 +44,6 @@ export class Invoice
 	declare public status?: string;
 	declare public created_at: Date;
 	declare public updated_at: Date;
-
-	public static async createRandom(appointment_id: number, total: number = faker.number.float({
-		min: 500,
-		max: 5000,
-		multipleOf: 0.01
-	})): Promise<Invoice> {
-
-		const discount = faker.number.float({
-			min: 0,
-			max: total * 0.2,
-			multipleOf: 0.01
-		});
-
-		return await Invoice.create({
-			appointment_id: appointment_id,
-			total_amount: total,
-			discount_amount: discount,
-			due_date: faker.date.future({ years: 1 }),
-			invoice_date: faker.date.recent({ days: 60 }),
-			status: faker.helpers.arrayElement([
-				'PENDING',
-				'PAID',
-				'CANCELED'
-			])
-		});
-	}
 }
 
 /**

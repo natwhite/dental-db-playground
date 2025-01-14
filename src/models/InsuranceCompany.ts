@@ -2,7 +2,6 @@
 
 import { DataTypes, Model, Optional } from 'sequelize';
 import { sequelize } from '../db.js';
-import { faker } from '@faker-js/faker';
 
 
 /**
@@ -44,18 +43,6 @@ export class InsuranceCompany
 	declare public zip_code: string;
 	declare public created_at: Date;
 	declare public updated_at: Date;
-
-	public static async createRandom() {
-		return await InsuranceCompany.create({
-			company_name: faker.company.name(),
-			phone: faker.string.numeric('(###) ###-####'),
-			address_line_1: faker.location.streetAddress(),
-			address_line_2: faker.helpers.maybe(() => faker.location.secondaryAddress(), { probability: 0.3 }),
-			city: faker.location.city(),
-			state: faker.location.state({ abbreviated: true }),
-			zip_code: faker.location.zipCode()
-		});
-	}
 }
 
 /**

@@ -2,7 +2,6 @@
 
 import { DataTypes, Model, Optional } from 'sequelize';
 import { sequelize } from '../db.js';
-import { faker } from '@faker-js/faker';
 
 
 /**
@@ -42,15 +41,7 @@ export class Appointment
 	declare public updated_at: Date;
 
 
-	public static async createRandom(patient_id: number, dentist_id: number): Promise<Appointment> {
-		return await Appointment.create({
-			patient_id: patient_id,
-			dentist_id: dentist_id,
-			appointment_datetime: faker.date.recent({ days: 300 }),
-			reason_for_visit: faker.lorem.words(3),
-			notes: faker.helpers.maybe(() => faker.lorem.sentence(), { probability: 0.3 })
-		});
-	}
+
 }
 
 /**

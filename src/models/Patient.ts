@@ -2,7 +2,6 @@
 
 import { DataTypes, Model, Optional } from 'sequelize';
 import { sequelize } from '../db.js';
-import { faker } from '@faker-js/faker';
 
 
 /**
@@ -42,24 +41,6 @@ export class Patient
 	declare public notes?: string;
 	declare public created_at: Date;
 	declare public updated_at: Date;
-
-	public static async createRandom(guardian_id: number, last_name?: string) {
-		return await Patient.create({
-			guardian_id: guardian_id,
-			first_name: faker.person.firstName(),
-			last_name: last_name || faker.person.lastName(), // Generate a random birthdate between 2010 and 2020
-			date_of_birth: faker.date.between({
-				from: '2010-01-01T00:00:00.000Z',
-				to: '2020-01-01T00:00:00.000Z'
-			}),
-			gender: faker.helpers.arrayElement([
-				'Male',
-				'Female',
-				'Non-binary'
-			]),
-			notes: faker.lorem.sentence()
-		});
-	}
 }
 
 /**

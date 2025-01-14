@@ -1,7 +1,6 @@
 // src/models/Office.ts
 import { DataTypes, Model, Optional } from 'sequelize';
 import { sequelize } from '../db.js';
-import { faker } from '@faker-js/faker';
 
 // Define the shape of the attributes
 interface OfficeAttributes {
@@ -38,18 +37,6 @@ export class Office
 	declare public phone_number: string;
 	declare public created_at: Date;
 	declare public updated_at: Date;
-
-	public static async createRandom() {
-		return await Office.create({
-			office_name: faker.company.name(),
-			brand_name: faker.company.buzzVerb(),
-			address_line_1: faker.location.streetAddress(),
-			city: faker.location.city(),
-			state: faker.location.state({ abbreviated: true }),
-			zip_code: faker.location.zipCode(),
-			phone_number: faker.string.numeric('(###) ###-####')
-		});
-	}
 }
 
 Office.init({

@@ -2,7 +2,6 @@
 
 import { DataTypes, Model, Optional } from 'sequelize';
 import { sequelize } from '../db.js';
-import { faker } from '@faker-js/faker';
 
 
 /**
@@ -38,19 +37,6 @@ export class Procedure
 	declare public standard_cost: number;
 	declare public created_at: Date;
 	declare public updated_at: Date;
-
-	public static async createRandom(appointment_id: number): Promise<Procedure> {
-		return await Procedure.create({
-			appointment_id: appointment_id,
-			procedure_code: faker.string.alphanumeric(5).toUpperCase(),
-			description: faker.lorem.words(3),
-			standard_cost: Number(faker.finance.amount({
-				min: 50,
-				max: 500,
-				dec: 2
-			}))
-		});
-	}
 }
 
 /**

@@ -2,7 +2,6 @@
 
 import { DataTypes, Model, Optional } from 'sequelize';
 import { sequelize } from '../db.js';
-import { faker } from '@faker-js/faker';
 
 
 /**
@@ -36,18 +35,6 @@ export class InsurancePlan
 	declare public coverage_type: string;
 	declare public created_at: Date;
 	declare public updated_at: Date;
-
-	public static async createRandom(insurance_id: number): Promise<InsurancePlan> {
-		return await InsurancePlan.create({
-			insurance_id: insurance_id,
-			plan_name: faker.word.noun() + ' Plan',
-			coverage_type: faker.helpers.arrayElement([
-				'PPO',
-				'HMO',
-				'Dental Only'
-			])
-		});
-	}
 }
 
 /**

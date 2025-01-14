@@ -2,7 +2,6 @@
 
 import { DataTypes, Model, Optional } from 'sequelize';
 import { sequelize } from '../db.js';
-import { faker } from '@faker-js/faker';
 
 
 /**
@@ -46,22 +45,6 @@ export class Dentist
 	declare public hired_date: Date;
 	declare public created_at: Date;
 	declare public updated_at: Date;
-
-	public static async createRandom(office_id: number): Promise<Dentist> {
-		return await Dentist.create({
-			office_id: office_id,
-			first_name: faker.person.firstName(),
-			last_name: faker.person.lastName(),
-			specialty: faker.helpers.arrayElement([
-				'Pediatric Dentist',
-				'Orthodontist',
-				'Endodontist'
-			]),
-			email: faker.internet.email(),
-			phone: faker.string.numeric('(###) ###-####'),
-			hired_date: faker.date.past({ years: 5 })
-		});
-	}
 }
 
 /**

@@ -2,7 +2,6 @@
 
 import { DataTypes, Model, Optional } from 'sequelize';
 import { sequelize } from '../db.js';
-import { faker } from '@faker-js/faker';
 
 
 /**
@@ -52,27 +51,6 @@ export class Guardian
 	declare public zip_code: string;
 	declare public created_at: Date;
 	declare public updated_at: Date;
-
-	public static async createRandom() {
-		return await Guardian.create({
-			first_name: faker.person.firstName(),
-			last_name: faker.person.lastName(),
-			relationship: faker.helpers.arrayElement([
-				'Mother',
-				'Father',
-				'Uncle',
-				'Aunt',
-				'Grandparent'
-			]),
-			phone_primary: faker.string.numeric('(###) ###-####'),
-			phone_secondary: faker.string.numeric('(###) ###-####'),
-			email: faker.internet.email(),
-			address_line_1: faker.location.streetAddress(),
-			city: faker.location.city(),
-			state: faker.location.state({ abbreviated: true }),
-			zip_code: faker.location.zipCode()
-		});
-	}
 }
 
 /**
