@@ -13,7 +13,7 @@ install();
 			min: 2,
 			max: 15,
 		});
-		await DatabaseSeeder.seedGuardians(20);
+		await DatabaseSeeder.seedGuardians(200);
 		await DatabaseSeeder.seedPatients({
 			min: 1,
 			max: 3,

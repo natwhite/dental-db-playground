@@ -117,7 +117,7 @@ export class DataGenerator {
 			patient_id: patient_id,
 			plan_id: plan_id,
 			is_primary: is_primary,
-			coverage_start_date: faker.date.past({ years: 2 }),
+			coverage_start_date: faker.date.past({ years: 5 }),
 			coverage_end_date: faker.helpers.maybe(() => faker.date.future({ years: 1 }), { probability: 0.2 })
 		});
 	}
@@ -126,7 +126,11 @@ export class DataGenerator {
 		return await Appointment.create({
 			patient_id: patient_id,
 			dentist_id: dentist_id,
-			appointment_datetime: faker.date.recent({ days: 300 }),
+			appointment_datetime: faker.date.between({
+				// Between 300 days ago and 30 days from now
+				from: new Date(Date.now() - 300 * msPerDay),
+				to: new Date(Date.now() + 30 * msPerDay)
+			}),
 			reason_for_visit: faker.lorem.words(3),
 			notes: faker.helpers.maybe(() => faker.lorem.sentence(), { probability: 0.3 })
 		});
@@ -139,7 +143,7 @@ export class DataGenerator {
 			description: faker.lorem.words(3),
 			standard_cost: Number(faker.finance.amount({
 				min: 200,
-				max: 10000,
+				max: 5000,
 				dec: 2
 			}))
 		});
