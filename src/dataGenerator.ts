@@ -14,6 +14,8 @@ import {
 import { faker } from '@faker-js/faker';
 
 
+const msPerDay: number = 24 * 60 * 60 * 1000;
+
 export class DataGenerator {
 	public static async generateOffice(): Promise<Office> {
 		return await Office.create({
@@ -168,20 +170,21 @@ export class DataGenerator {
 
 	public static async generateInvoicePayment(
 		invoice_id: number,
-		total_amount: number,
-		discount_amount: number,
-		invoice_date: Date
+		remainingTotal: number,
+		invoice_date: Date,
+		fullPayment: boolean
 	): Promise<Payment> {
 		return await Payment.create({
 			invoice_id: invoice_id,
-			amount: Number(faker.finance.amount({
+			amount: fullPayment ? remainingTotal : Number(faker.finance.amount({
 				// min: 10,
-				max: Number(total_amount) - Number(discount_amount),
+				max: Number(remainingTotal),
 				dec: 2
 			})),
 			payment_date: faker.date.between({
+				// Payment was made between the invoice date and 90 days afterward
 				from: invoice_date,
-				to: new Date()
+				to: new Date(invoice_date.getTime() + 90 * msPerDay)
 			}),
 			payment_method: faker.helpers.arrayElement([
 				'CREDIT_CARD',

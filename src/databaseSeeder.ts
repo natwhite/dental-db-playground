@@ -158,17 +158,33 @@ export class DatabaseSeeder {
 		// 12) Seed PAYMENTS for each Invoice
 		const invoices = await Invoice.findAll({ raw: true });
 		for (const invoice of invoices) {
+			let paymentsCount = faker.number.int(paymentsPerInvoice);
+			switch (invoice.status) {
+				case 'CANCELED':
+					// There's no need to add a payment for a cancelled invoice.
+					continue;
+				case 'PAID':
+					// If the invoice is paid, there must be at least 1 payment
+					paymentsCount = Math.max(paymentsCount, 1);
+					break;
+				case 'PENDING':
+					break;
+				default:
+					throw new Error('Unexpected Invoice Status');
+			}
+
 			// TODO: add random logic - if status is 'PAID', create 1-2 random payments
 			// if 'PENDING', maybe partial payment or none
 			// if 'CANCELED', maybe no payments
-			const paymentsCount = faker.number.int(paymentsPerInvoice);
-			let remainingTotal = invoice.total_amount;
-			for (let i = 0; i < paymentsCount; i++) {
+			let remainingTotal = invoice.final_amount;
+			if (!remainingTotal) throw new Error('Final amount not set for Invoice');
+
+			for (let i = 1; i <= paymentsCount; i++) {
 				const payment = await DataGenerator.generateInvoicePayment(
 					invoice.invoice_id,
 					remainingTotal,
-					invoice.discount_amount,
-					invoice.invoice_date as Date,
+					new Date(Date.parse(invoice.invoice_date as unknown as string)),
+					i === paymentsCount && invoice.status === 'PAID'
 				);
 				// Using the Decimal class to prevent any math errors.
 				remainingTotal = Decimal.round(remainingTotal - payment.amount, 2);

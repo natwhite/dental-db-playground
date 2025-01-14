@@ -38,7 +38,7 @@ install();
 		await DatabaseSeeder.seedAppointmentInvoices(0.1);
 		await DatabaseSeeder.seedInvoicePayments({
 			min: 0,
-			max: 2
+			max: 4
 		});
 
 		console.log('Seeding completed successfully!');
