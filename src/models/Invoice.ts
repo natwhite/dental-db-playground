@@ -15,7 +15,7 @@ interface InvoiceAttributes {
 	final_amount?: number; // This might be a virtual or calculated column
 	due_date: Date;
 	invoice_date?: Date;
-	status?: string;
+	status?: 'PENDING' | 'PAID' | 'CANCELED';
 	created_at?: Date;
 	updated_at?: Date;
 }
@@ -41,7 +41,7 @@ export class Invoice
 	declare public final_amount?: number;
 	declare public due_date: Date;
 	declare public invoice_date?: Date;
-	declare public status?: string;
+	declare public status?: 'PENDING' | 'PAID' | 'CANCELED';
 	declare public created_at: Date;
 	declare public updated_at: Date;
 }
@@ -93,6 +93,9 @@ Invoice.init({
 	 */
 	final_amount: {
 		type: DataTypes.DECIMAL(10, 2),
+		get() {
+			return this.getDataValue('final_amount');
+		},
 		allowNull: true
 	},
 	due_date: {
@@ -105,7 +108,7 @@ Invoice.init({
 		defaultValue: DataTypes.NOW
 	},
 	status: {
-		type: DataTypes.STRING(50),
+		type: DataTypes.ENUM('PENDING', 'PAID', 'CANCELED'),
 		allowNull: false,
 		defaultValue: 'PENDING'
 	},

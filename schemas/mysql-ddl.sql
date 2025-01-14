@@ -1,8 +1,10 @@
 -- Create the database (if needed)
-CREATE DATABASE IF NOT EXISTS dental_db;
+CREATE
+DATABASE IF NOT EXISTS dental_db;
 
 -- Switch to the newly created database
-USE dental_db;
+USE
+dental_db;
 
 
 -- Drop tables in the opposite order from how they were created to avoid fk dependency constraints
@@ -149,12 +151,12 @@ CREATE TABLE insurance_plans
 
 CREATE TABLE patient_insurance
 (
-    patient_id          INT        NOT NULL,
-    plan_id             INT        NOT NULL,
+    patient_id          INT      NOT NULL,
+    plan_id             INT      NOT NULL,
     is_primary          TINYINT(1) NOT NULL DEFAULT 0,
-    coverage_start_date DATE       NOT NULL,
+    coverage_start_date DATE     NOT NULL,
     coverage_end_date   DATE,
-    created_at          DATETIME   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     PRIMARY KEY (patient_id, plan_id),
 
@@ -236,7 +238,7 @@ CREATE TABLE invoices
     final_amount    DECIMAL(10, 2) GENERATED ALWAYS AS (total_amount - discount_amount) STORED,
     due_date        DATE           NOT NULL,
     invoice_date    DATE           NOT NULL DEFAULT (CURRENT_DATE),
-    status          VARCHAR(50)    NOT NULL DEFAULT 'PENDING', -- e.g., 'PENDING', 'PAID', 'CANCELED'
+    status          ENUM ('PENDING', 'PAID', 'CANCELED') NOT NULL DEFAULT 'PENDING',
     created_at      DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at      DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
